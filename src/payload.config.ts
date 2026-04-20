@@ -8,6 +8,9 @@ import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
 
+import { en } from '@payloadcms/translations/languages/en'
+import { ar } from '@payloadcms/translations/languages/ar'
+
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Note } from './collections/Note'
@@ -53,6 +56,18 @@ export default buildConfig({
   },
   collections: [Users, Media, Note],
   editor: lexicalEditor(),
+  i18n: {
+    supportedLanguages: { en, ar },
+    fallbackLanguage: 'en',
+  },
+  localization: {
+    locales: [
+      { label: 'English', code: 'en' },
+      { label: 'Arabic', code: 'ar', rtl: true, fallbackLocale: 'en' },
+    ],
+    defaultLocale: 'en',
+    fallback: true,
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
