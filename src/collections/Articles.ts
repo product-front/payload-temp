@@ -8,13 +8,37 @@ export const Articles: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'title',
-    defaultColumns: ['title', 'category', 'status', 'featured', 'publishedDate', 'updatedAt'],
+    defaultColumns: ['title', 'category', '_status', 'featured', 'publishedDate', 'updatedAt'],
   },
   access: {
-    read: () => true,
+    read: ({ req }) => {
+      if (req.user) return true
+      return { _status: { equals: 'published' } }
+    },
   },
   versions: {
     drafts: true,
+  },
+  hooks: {
+    beforeValidate: [
+      ({ data }) => {
+        if (data?.title && !data.slug) {
+          data.slug = data.title
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-|-$/g, '')
+        }
+        return data
+      },
+    ],
+    beforeChange: [
+      ({ data }) => {
+        if (data?._status === 'published' && !data.publishedDate) {
+          data.publishedDate = new Date().toISOString().split('T')[0]
+        }
+        return data
+      },
+    ],
   },
   fields: [
     {
@@ -113,34 +137,12 @@ export const Articles: CollectionConfig = {
         position: 'sidebar',
       },
     },
-    // {
-    //   name: 'author',
-    //   type: 'relationship',
-    //   relationTo: 'team-members',
-    //   label: { en: 'Author', ar: 'الكاتب' },
-    //   admin: {
-    //     position: 'sidebar',
-    //   },
-    // },
     {
       name: 'readTime',
       type: 'number',
       label: { en: 'Read Time (minutes)', ar: 'مدة القراءة (دقيقة)' },
       min: 1,
       defaultValue: 5,
-      admin: {
-        position: 'sidebar',
-      },
-    },
-    {
-      name: 'status',
-      type: 'select',
-      label: { en: 'Publish Status', ar: 'حالة النشر' },
-      defaultValue: 'draft',
-      options: [
-        { label: { en: 'Draft', ar: 'مسودة' }, value: 'draft' },
-        { label: { en: 'Published', ar: 'منشور' }, value: 'published' },
-      ],
       admin: {
         position: 'sidebar',
       },
@@ -158,7 +160,6 @@ export const Articles: CollectionConfig = {
       name: 'publishedDate',
       type: 'date',
       label: { en: 'Publish Date', ar: 'تاريخ النشر' },
-      required: true,
       admin: {
         position: 'sidebar',
         date: {

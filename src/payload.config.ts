@@ -13,14 +13,14 @@ import { ar } from '@payloadcms/translations/languages/ar'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
-import { Note } from './collections/Note'
 import { Articles } from './collections/Articles'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
-const realpath = (value: string) => (fs.existsSync(value) ? fs.realpathSync(value) : undefined)
+const realpath = (value: string) => (fs.existsSync(value) ? fs.realpathSync(value) : '')
 
 const isCLI = process.argv.some((value) => realpath(value).endsWith(path.join('payload', 'bin.js')))
+const isSeed = process.env.PAYLOAD_SEED === 'true'
 const isProduction = process.env.NODE_ENV === 'production'
 
 const createLog =
@@ -44,7 +44,7 @@ const cloudflareLogger = {
 } as any // Use PayloadLogger type when it's exported
 
 const cloudflare =
-  isCLI || !isProduction
+  isCLI || isSeed || !isProduction
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
@@ -61,7 +61,7 @@ export default buildConfig({
       },
     },
   },
-  collections: [Users, Media, Note, Articles],
+  collections: [Users, Media, Articles],
   editor: lexicalEditor(),
   i18n: {
     supportedLanguages: { en, ar },
