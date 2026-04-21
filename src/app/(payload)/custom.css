@@ -1,0 +1,202 @@
+/*
+ * Admin Panel Theme
+ *
+ * HOW TO REBRAND:
+ *   1. Set --accent-h and --accent-s to your brand color
+ *   2. Uncomment @font-face and --font-body for custom fonts
+ *   3. Done — dark mode adapts automatically
+ */
+
+
+/* ==========================================================
+   CUSTOM FONT
+   Place font files in /public/fonts/ then uncomment below.
+   ========================================================== */
+/*
+@font-face {
+  font-family: 'BrandFont';
+  src: url('/fonts/brand-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BrandFont';
+  src: url('/fonts/brand-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'BrandFont';
+  src: url('/fonts/brand-bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+
+/* ==========================================================
+   THEME VARIABLES — edit these to rebrand
+   ========================================================== */
+:root {
+  /*
+   * Accent color (HSL hue + saturation).
+   * Use any HSL picker to find values. Examples:
+   *   Blue:   --accent-h: 220; --accent-s: 90%;
+   *   Purple: --accent-h: 295; --accent-s: 67%;
+   *   Teal:   --accent-h: 170; --accent-s: 60%;
+   *   Orange: --accent-h: 25;  --accent-s: 90%;
+   */
+  --accent-h: 295;
+  --accent-s: 67%;
+
+  /* Uncomment to use a custom font */
+  /* --font-body: 'BrandFont', -apple-system, BlinkMacSystemFont, sans-serif; */
+
+  /* Accent scale — auto-generated from hue + saturation */
+  --accent-50:  hsl(var(--accent-h), var(--accent-s), 96%);
+  --accent-100: hsl(var(--accent-h), var(--accent-s), 92%);
+  --accent-200: hsl(var(--accent-h), var(--accent-s), 85%);
+  --accent-300: hsl(var(--accent-h), var(--accent-s), 74%);
+  --accent-400: hsl(var(--accent-h), var(--accent-s), 62%);
+  --accent-500: hsl(var(--accent-h), var(--accent-s), 50%);
+  --accent-600: hsl(var(--accent-h), var(--accent-s), 42%);
+  --accent-700: hsl(var(--accent-h), var(--accent-s), 34%);
+  --accent-800: hsl(var(--accent-h), var(--accent-s), 26%);
+  --accent-900: hsl(var(--accent-h), var(--accent-s), 18%);
+  --accent-950: hsl(var(--accent-h), var(--accent-s), 10%);
+
+  /* Map accent into Payload's success color system (focus rings, checkboxes, toasts) */
+  --color-success-50:  var(--accent-50);
+  --color-success-100: var(--accent-50);
+  --color-success-150: var(--accent-100);
+  --color-success-200: var(--accent-200);
+  --color-success-250: var(--accent-200);
+  --color-success-300: var(--accent-300);
+  --color-success-350: var(--accent-300);
+  --color-success-400: var(--accent-400);
+  --color-success-450: var(--accent-400);
+  --color-success-500: var(--accent-500);
+  --color-success-550: var(--accent-500);
+  --color-success-600: var(--accent-600);
+  --color-success-650: var(--accent-600);
+  --color-success-700: var(--accent-700);
+  --color-success-750: var(--accent-700);
+  --color-success-800: var(--accent-800);
+  --color-success-850: var(--accent-800);
+  --color-success-900: var(--accent-900);
+  --color-success-950: var(--accent-950);
+}
+
+html[data-theme='dark'] {
+  --accent-50:  hsl(var(--accent-h), var(--accent-s), 10%);
+  --accent-100: hsl(var(--accent-h), var(--accent-s), 16%);
+  --accent-200: hsl(var(--accent-h), var(--accent-s), 22%);
+  --accent-300: hsl(var(--accent-h), var(--accent-s), 35%);
+  --accent-400: hsl(var(--accent-h), var(--accent-s), 50%);
+  --accent-500: hsl(var(--accent-h), var(--accent-s), 58%);
+  --accent-600: hsl(var(--accent-h), var(--accent-s), 68%);
+  --accent-700: hsl(var(--accent-h), var(--accent-s), 76%);
+  --accent-800: hsl(var(--accent-h), var(--accent-s), 85%);
+  --accent-900: hsl(var(--accent-h), var(--accent-s), 92%);
+  --accent-950: hsl(var(--accent-h), var(--accent-s), 96%);
+}
+
+
+/* ==========================================================
+   BUTTONS
+   ========================================================== */
+.btn--style-primary {
+  background-color: var(--accent-600) !important;
+  color: #fff !important;
+}
+.btn--style-primary:hover,
+.btn--style-primary:focus {
+  background-color: var(--accent-700) !important;
+}
+.btn--style-primary:active {
+  background-color: var(--accent-800) !important;
+}
+
+.btn--style-secondary {
+  border-color: var(--accent-600) !important;
+  color: var(--accent-700) !important;
+}
+.btn--style-secondary:hover,
+.btn--style-secondary:focus {
+  background-color: var(--accent-50) !important;
+}
+
+.btn--style-pill:hover,
+.btn--style-pill:focus {
+  background-color: var(--accent-100) !important;
+  color: var(--accent-800) !important;
+}
+
+
+/* ==========================================================
+   INPUT FIELDS — focus states
+   ========================================================== */
+input:focus,
+textarea:focus,
+select:focus,
+.rs__control--is-focused,
+.field-type:focus-within .rs__control {
+  border-color: var(--accent-500) !important;
+  box-shadow: 0 0 0 2px var(--accent-200) !important;
+}
+
+.rich-text:focus-within {
+  border-color: var(--accent-500) !important;
+  box-shadow: 0 0 0 2px var(--accent-200) !important;
+}
+
+
+/* ==========================================================
+   SIDEBAR / NAV
+   ========================================================== */
+.nav-group .nav__link.active,
+.nav-group .nav__link--active {
+  color: var(--accent-700) !important;
+}
+.nav-group .nav__link:hover {
+  color: var(--accent-600) !important;
+}
+
+
+/* ==========================================================
+   CHECKBOXES & TOGGLES
+   ========================================================== */
+.checkbox-input:checked {
+  background-color: var(--accent-600) !important;
+  border-color: var(--accent-600) !important;
+}
+
+
+/* ==========================================================
+   TABS (locale switcher, collection tabs)
+   ========================================================== */
+.tabs-field__tab-button--active,
+.tabs-field__tab-button:hover {
+  border-color: var(--accent-600) !important;
+  color: var(--accent-700) !important;
+}
+
+
+/* ==========================================================
+   LINKS
+   ========================================================== */
+a:not(.btn):hover {
+  color: var(--accent-600);
+}
+
+
+/* ==========================================================
+   TEXT SELECTION
+   ========================================================== */
+::selection {
+  background-color: var(--accent-200);
+  color: var(--accent-900);
+}

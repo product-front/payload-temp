@@ -14,6 +14,7 @@ import { ar } from '@payloadcms/translations/languages/ar'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Note } from './collections/Note'
+import { Articles } from './collections/Articles'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -53,8 +54,14 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      graphics: {
+        Logo: '/components/Logo#Logo',
+        Icon: '/components/Icon#Icon',
+      },
+    },
   },
-  collections: [Users, Media, Note],
+  collections: [Users, Media, Note, Articles],
   editor: lexicalEditor(),
   i18n: {
     supportedLanguages: { en, ar },
